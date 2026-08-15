@@ -30,3 +30,11 @@ jobs:
       
     - name: 5. Rodar o nosso teste de Login
       run: npx playwright test
+
+    - name: 6. Salvar o Relatório (Artefato)
+          uses: actions/upload-artifact@v4
+          if: always() # A palavra mágica: Salva a evidência MESMO SE o passo 5 falhar!
+          with:
+            name: relatorio-testes
+            path: playwright-report/
+            retention-days: 10 # Guarda o zip por 10 dias no GitHub      
