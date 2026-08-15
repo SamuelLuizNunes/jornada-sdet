@@ -1,0 +1,32 @@
+# O nome da nossa linha de montagem
+name: Playwright Tests
+
+# O GATILHO (Quando o robô deve acordar?)
+on:
+  push:
+    branches: [ main ] # Sempre que código novo chegar na branch main
+
+# OS TRABALHOS (O que ele vai fazer?)
+jobs:
+  test:
+    # Em qual máquina da nuvem ele vai rodar? (Ubuntu é um Linux gratuito e rápido)
+    runs-on: ubuntu-latest 
+
+    # O PASSO A PASSO
+    steps:
+    - name: 1. Baixar o código do repositório
+      uses: actions/checkout@v4
+      
+    - name: 2. Instalar o Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        
+    - name: 3. Instalar as dependências (NPM)
+      run: npm ci
+      
+    - name: 4. Instalar o motor dos navegadores
+      run: npx playwright install --with-deps
+      
+    - name: 5. Rodar o nosso teste de Login
+      run: npx playwright test
